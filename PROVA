@@ -1,0 +1,71 @@
+Arquivo KT
+package br.unipar.provaprogramacaodispositivosmobile
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var adapter: ArrayAdapter<String>
+    private val gastos = mutableListOf<String>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val txtEscolhaDouC = findViewById<EditText>(R.id.txtEscolhaDouC)
+        val txtListaGastos = findViewById<ListView>(R.id.txtListaGastos)
+        val botaoadc = findViewById<Button>(R.id.botaoadc)
+        val valorGasto = findViewById<EditText>(R.id.editTxtValorGst)
+
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, gastos)
+        txtListaGastos.adapter = adapter
+
+        botaoadc.setOnClickListener {
+            val valor = valorGasto.text.toString()
+            if (valor.isNotEmpty()) {
+                gastos.add(valor)
+                adapter.notifyDataSetChanged()
+                valorGasto.text.clear()
+            }
+        }
+    }
+}
+
+
+
+Arquivo XML
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/txtEscolhaDouC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escolha do dispositivo" />
+
+    <EditText
+        android:id="@+id/editTxtValorGst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valor do gasto" />
+
+    <Button
+        android:id="@+id/botaoadc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adicionar" />
+
+    <ListView
+        android:id="@+id/txtListaGastos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
